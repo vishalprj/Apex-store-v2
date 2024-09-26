@@ -1,0 +1,140 @@
+/* header section */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem 3rem;
+  background: var(--clr-primary-0);
+  background-image: url('https://res.cloudinary.com/ddlpde95c/image/upload/v1671710229/hero4_oyc7j9.png');
+  background-image: url('');
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 999;
+}
+
+.humburger-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.hide-for-desktop {
+  display: none;
+}
+
+.logo {
+  font-weight: 600;
+  font-size: 3.5rem;
+}
+.myreact-icons {
+  height: 2em;
+}
+.navbar {
+  display: flex;
+  justify-content: center;
+  flex-basis: auto;
+}
+.navbar li {
+  padding: 0 0.5rem;
+}
+
+.navbar li a {
+  font-size: 1em;
+  font-weight: 500;
+  color: #1a1a1a;
+  transition: 0.3s ease;
+}
+.navbar li a:hover,
+.navbar li a.active {
+  color: #088178;
+}
+.mobile {
+  display: none;
+}
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.nav-right ul {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.close {
+  opacity: 0;
+}
+
+.icon-link {
+  font-size: 2rem;
+}
+
+.cart-span {
+  right: 12.2rem;
+  top: 2.2rem;
+}
+.wishlist-span {
+  right: 15.2rem;
+  top: 2.1rem;
+}
+
+.nav-link-span {
+  position: absolute;
+  justify-content: center;
+  display: flex;
+  font-size: 1.1rem;
+  align-items: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  background: #088178;
+  color: white;
+  border-radius: 50%;
+}
+
+.btn_1 {
+  border: none;
+}
+.side {
+  display: none;
+}
+.logout-btn {
+  border: 1px solid #088178;
+  border-radius: 0.7rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+}
+/* Media Queries  */
+@media (max-width: 665px) {
+  .logo {
+    font-size: 2.8rem;
+  }
+  .nav-right ul {
+    display: none;
+  }
+  .side {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+  .header {
+    padding: 20px 14px;
+  }
+  .hide-for-desktop {
+    display: block;
+  }
+  .cart-span {
+    right: 11.6rem;
+    top: 2.7rem;
+  }
+  .wishlist-span {
+    right: 15.6rem;
+    top: 2.7rem;
+  }
+}

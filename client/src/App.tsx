@@ -1,9 +1,19 @@
-
-import "./App.css";
+import { Navbar } from "./components/header";
+import { LoginPage } from "./components/login";
+import { SignUp } from "./components/sign";
+import HomePage from "./page/home";
+import { Routes, Route } from 'react-router-dom';
 
 function App() {
     return (
-        <h1>Vi</h1>
+        <>
+            <Navbar />
+            <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/signup" element={<SignUp />} />
+            </Routes>
+        </>
     );
 }
 
