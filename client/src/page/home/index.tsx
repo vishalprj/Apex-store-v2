@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// import { Features } from '../../components/Content/Features';
-// import { ProductCard } from '../../components/ProductCard/ProductCard';
-import "./home.css"
+import "./home.css";
+import { Features } from '../../components/features';
+import { ProductCard } from '../../components/card';
+
 const HomePage = () => {
   const productsList = [
     {
@@ -10,7 +11,7 @@ const HomePage = () => {
       name: 'Stylish T-Shirt',
       price: 19.99,
       isFeatured: true,
-      image: 'https://via.placeholder.com/150', // Placeholder image
+      image: 'https://via.placeholder.com/150',
     },
     {
       id: 2,
@@ -40,6 +41,13 @@ const HomePage = () => {
       isFeatured: false,
       image: 'https://via.placeholder.com/150',
     },
+     {
+      id: 6,
+      name: 'Fashionable Bag',
+      price: 59.99,
+      isFeatured: true,
+      image: 'https://via.placeholder.com/150',
+    },
   ];
 
   return (
@@ -53,16 +61,19 @@ const HomePage = () => {
           <button type="button">Shop Now</button>
         </Link>
       </section>
-      {/* <Features /> */}
+
+      <Features />
+
       <section className="product padding">
         <h2>Featured Products</h2>
         <p>Summer Collection New Modern Design</p>
         <div className="pro">
-          {/* {productsList
+          {/* Mapping through productsList to display featured products */}
+          {productsList
             .filter((product) => product.isFeatured)
             .map((product) => (
               <ProductCard key={product.id} product={product} />
-            ))} */}
+            ))}
         </div>
       </section>
 
@@ -72,7 +83,7 @@ const HomePage = () => {
           <h2>buy 1 get 1 free</h2>
           <span>The best classic dress is on sale</span>
           <Link to="/shop">
-            <button className="btn">Learn More</button>
+            <button className="button">Learn More</button>
           </Link>
         </div>
         <div className="banner-box banner2">
@@ -80,15 +91,13 @@ const HomePage = () => {
           <h2>upcoming season</h2>
           <span>The best classic dress is on sale</span>
           <Link to="/shop">
-            <button
-              className="btn"
-              style={{ color: 'white', borderColor: 'white' }}
-            >
+            <button className="btn" style={{ color: 'white', borderColor: 'white' }}>
               Collection
             </button>
           </Link>
         </div>
       </section>
+
       <section className="banner">
         <h4>Repair Services</h4>
         <h2>

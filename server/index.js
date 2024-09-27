@@ -55,24 +55,27 @@ const authMiddleware = async (req, res, next) => {
 };
 
 // Routes
-app.post('/api/register', async (req,res)=>{
-    const {username , password, role}=req.body;
-    try {
-        const user = await StoreUser.findOne({username})
-        if(user){
-            return res.status(400).json({msg:'User already exists'})
-        }
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
+app.post('/api/register', async (req, res) => {
+  const { username, password, role } = req.body;
 
-        user = new StoreUser({username,password:hashedPassword,role})
-        await user.save();
-
-        res.json({ msg: 'User registered successfully', role: user.role });
-    } catch (error) {
-        res.status(500).send('Server error');
+  try {
+    let user = await StoreUser.findOne({ username });
+    if (user) {
+      return res.status(400).json({ msg: 'User already exists' });
     }
-})
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    const newUser = new StoreUser({ username, password: hashedPassword, role });
+    await newUser.save();
+
+    res.json({ msg: 'User registered successfully', role: newUser.role });
+  } catch (error) {
+    res.status(500).send('Server error');
+  }
+});
+
 
 // login route
 app.post('/api/login',async (req,res)=>{

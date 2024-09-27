@@ -28,11 +28,7 @@
   width: 100%;
   transition: all 0.3s;
 }
-/* @media only screen and (max-width: 56.25em) {
-  .form__input {
-    width: 100%;
-  }
-} */
+
 .form-input:focus {
   outline: none;
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
@@ -118,12 +114,10 @@
   font-weight: 600;
   margin-top: 2rem;
   font-size: 1.5rem;
-  color: inherit;
+  color: black;
   padding: 1.5rem 2rem;
   border-radius: 1rem;
-  border: 1px solid var(--clr-black);
-  display: block;
-  margin: 0 auto;
+  border: 1px solid black;
   width: 100%;
   transition: all 0.3s;
   margin-bottom: 1rem;

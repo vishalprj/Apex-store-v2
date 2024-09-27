@@ -1,0 +1,36 @@
+/* feature BOX  */
+.feature {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.feature .content {
+  text-align: center;
+  padding: 25px 15px;
+  width: 180px;
+  box-shadow: 20px 20px 34px rgba(0, 0, 0, 0.03);
+  border: 1px solid #cce7d0;
+  border-radius: 4px;
+  margin: 15px 0;
+  font-size: 2.07rem;
+}
+
+.feature .content:hover {
+  box-shadow: 10px 10px 54px rgba(70, 62, 222, 0.1);
+}
+.feature .content img {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.feature .content h6 {
+  padding: 9px 8px 6px 8px;
+  line-height: 1;
+  border-radius: 4px;
+  color: #088178;
+  font-size: 1.4rem;
+  font-weight: normal;
+  background-color: #fddde4;
+}
