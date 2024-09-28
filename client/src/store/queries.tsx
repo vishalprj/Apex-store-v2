@@ -53,3 +53,14 @@ export const createProduct = async (payload) => {
   }
 };
 
+
+
+export const deleteProduct = async (id) => {
+  try {
+    const res = await axios.delete('https://amazon-clone-v1.onrender.com/api/products', id);
+    return res.data;
+  } catch (error) {
+    console.error("Error during product addition:", error);
+    throw error;
+  }
+};
