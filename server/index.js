@@ -115,7 +115,7 @@ app.get('/api/single-product/:id', async (req, res) => {
 
 
 app.delete('/api/products/:id', async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.body;
   try {
     const product = await Product.findByIdAndDelete(id);
     if (!product) {
