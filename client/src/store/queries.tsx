@@ -41,3 +41,15 @@ export const getSingleProduct = async (id:string|undefined) => {
     throw error;
   }
 };
+
+
+export const createProduct = async (payload) => {
+  try {
+    const res = await axios.post('https://amazon-clone-v1.onrender.com/api/products', payload);
+    return res.data;
+  } catch (error) {
+    console.error("Error during product addition:", error);
+    throw error;
+  }
+};
+

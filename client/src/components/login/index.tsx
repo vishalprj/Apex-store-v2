@@ -1,33 +1,38 @@
-import  { useState, FormEvent } from 'react';
+import { useState, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './login.css';
 import { getLogin } from '../../store/queries';
 import toast from 'react-hot-toast';
 
-
-const LoginPage = () => {
+const LoginPage = ({setUser}) => {
   const [userName, setUserName] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [userType,setUserType] = useState()
   const navigate = useNavigate();
 
+const handleLogin = async (e: FormEvent) => {
+  e.preventDefault();
+  const payload = { username: userName, password };
 
-  const handleLogin = async (e: FormEvent) => {
-    e.preventDefault();
+  try {
+    const res = await getLogin(payload);
+    toast.success('User logged in successfully!');
 
-    const payload = {
-      username: userName,
-      password,
-    };
+    const userRole = res?.user?.role;
+    localStorage.setItem("user", userRole);
+    setUser(userRole);
+    setUserType(userRole)
 
-    try {
-      await getLogin(payload);
-      toast.success('User login successfully!');
+    if (userRole === "admin") {
+      navigate('/dashboard');
+    } else {
       navigate('/');
-    } catch (error) {
-      console.error('Login failed:', error);
-      toast.error('Failed to login!!');
     }
-  };
+  } catch (error) {
+    console.error('Login failed:', error);
+    toast.error('Failed to login!');
+  }
+};
 
   return (
     <main className="section-outer grid-center auth-section">

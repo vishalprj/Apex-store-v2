@@ -36,24 +36,6 @@ const StoreProductSchema = new mongoose.Schema({
 
 const Product = mongoose.model("StoreProduct", StoreProductSchema);
 
-// Authentication Middleware
-const authMiddleware = async (req, res, next) => {
-  const { username, password } = req.headers;
-  if (!username || !password) {
-    return res.status(401).json({ msg: 'Authentication required' });
-  }
-  try {
-    const user = await StoreUser.findOne({ username });
-    if (!user || !(await bcrypt.compare(password, user.password))) {
-      return res.status(401).json({ msg: 'Invalid credentials' });
-    }
-    req.user = user;
-    next();
-  } catch (err) {
-    res.status(500).json({ msg: 'Server error' });
-  }
-};
-
 // Routes
 app.post('/api/register', async (req, res) => {
   const { username, password, role } = req.body;
@@ -93,11 +75,7 @@ app.post('/api/login',async (req,res)=>{
 
 
 // Add Product (Admin only)
-app.post('/api/products', authMiddleware, async (req, res) => {
-  if (req.user.role !== 'admin') {
-    return res.status(403).json({ msg: 'Access denied' });
-  }
-
+app.post('/api/products', async (req, res) => {
   const { name, price, type, description, imageUrl } = req.body;
   try {
     const newProduct = new Product({ name, price, type, description, imageUrl });
@@ -120,8 +98,7 @@ app.get('/api/products', async (req, res) => {
   }
 });
 
-// Get Single Products
-// Get Single Product by ID
+
 app.get('/api/single-product/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -137,26 +114,19 @@ app.get('/api/single-product/:id', async (req, res) => {
 });
 
 
-// app.get('/api/products/search', async (req, res) => {
-//   const { name, minPrice, maxPrice, type } = req.query;
-//   let query = {};
-
-//   if (name) query.name = new RegExp(name, 'i');
-//   if (type) query.type = type;
-//   if (minPrice || maxPrice) {
-//     query.price = {};
-//     if (minPrice) query.price.$gte = minPrice;
-//     if (maxPrice) query.price.$lte = maxPrice;
-//   }
-
-//   try {
-//     const products = await Product.find(query);
-//     res.json(products);
-//   } catch (err) {
-//     console.error(err.message);
-//     res.status(500).send('Server error');
-//   }
-// });
+app.delete('/api/products/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const product = await Product.findByIdAndDelete(id);
+    if (!product) {
+      return res.status(404).json({ msg: 'Product not found' });
+    }
+    res.json({ msg: 'Product deleted successfully' });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

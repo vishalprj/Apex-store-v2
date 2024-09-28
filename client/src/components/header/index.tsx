@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
-import {
-  AiOutlineUser,
-  AiOutlineShoppingCart,
-  AiOutlineHeart,
-} from 'react-icons/ai';
-import { BsCartDash, BsPerson } from 'react-icons/bs';
 import { Squash as Hamburger } from 'hamburger-react';
-import { Link } from 'react-router-dom';
-import "./header.css"
-export const Navbar = () => {
+import { Link, useNavigate } from 'react-router-dom';
+import "./header.css";
 
+export const Navbar = ({ user, setUser }) => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [isOpen, setOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    setUser(null);
+    navigate('/');
+  };
 
   return (
     <>
@@ -21,11 +22,8 @@ export const Navbar = () => {
             onClick={() => setShowSidebar(!showSidebar)}
             type="submit"
             id="btnHamburger"
-            // href="#"
             aria-label="menu-icon"
-            className={`nav-toggle hide-for-desktop ${
-              showSidebar ? 'open' : ''
-            }`}
+            className={`nav-toggle hide-for-desktop ${showSidebar ? 'open' : ''}`}
           >
             <Hamburger size={25} toggle={setOpen} />
           </button>
@@ -44,18 +42,28 @@ export const Navbar = () => {
             <li>
               <Link to="/about">About</Link>
             </li>
+
+            {user === 'admin' && (
+              <li>
+                <Link to="/dashboard">Dashboard</Link>
+              </li>
+            )}
           </ul>
 
+          {!user ? (
+            <Link to="/login" className="btn-login">
+              Login
+            </Link>
+          ) : (
             <button
               aria-label="logout-icon"
               type="button"
-            //   onClick={() => {
-            //     logOutUser(setUser, setCart, setWishlist, setLogin, navigate);
-            //   }}
+              onClick={handleLogout}
               className="flex-al-center border-none logout-btn"
             >
               LOG OUT
             </button>
+          )}
         </div>
       </section>
     </>

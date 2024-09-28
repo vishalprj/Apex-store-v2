@@ -5,7 +5,6 @@ import { getSingleProduct } from '../../store/queries';
 
 export const SingleProduct = () => {
   const { id } = useParams();
-  console.log("🚀 ~ SingleProduct ~ id:", id)
   const [singleProduct, setSingleProduct] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -25,7 +24,7 @@ export const SingleProduct = () => {
     fetchProduct();
   }, [id]);
 
-  if (loading) return <h2>Loading...</h2>;
+//   if (loading) return <h2>Loading...</h2>;
 
   if (!singleProduct) return null;
 
@@ -52,10 +51,10 @@ export const SingleProduct = () => {
         </div>
         <div className="right">
           <h2 className="single-product-title">{singleProduct.description}</h2>
-          <p className="single-product-company text-slanted">{`by ${singleProduct.title}`}</p>
+          <p className="single-product-company text-slanted">{`by ${singleProduct.name}`}</p>
           <h4 className="single-product-price">₹{singleProduct?.price}</h4>
           <h4 className="">Product Details:</h4>
-          <p>{singleProduct.description}</p>
+          <p>Care Instructions: Hand Wash Only Fit Type: Regular Fit Relaxed fit beach shirt made of lightweight and soft fabric, give you comfortable and nature skin feel, button down shirt with one left pocket.</p>
           <div className="single-product-btns flex-al-centerr">
             <button className="btn_cart">Add to Cart</button>
           </div>
