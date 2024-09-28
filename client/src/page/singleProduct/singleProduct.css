@@ -1,0 +1,139 @@
+.detail {
+  grid-gap: 1rem;
+  display: grid;
+  gap: 1rem 2rem;
+  grid-template-columns: 1fr 1fr;
+  margin: 5rem auto;
+  place-items: center;
+  padding-bottom: 10rem;
+}
+.single-product-img {
+  border-radius: var(--radius);
+  height: 40rem;
+  object-fit: cover;
+  width: 30rem;
+}
+.single-product-company {
+  font-size: 1.6rem;
+  color: #bcccdc;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--spacing);
+  margin-bottom: 1rem;
+}
+
+.detail .right {
+  margin-top: 2.2rem;
+  padding: 3rem;
+}
+.section-center h3 {
+  font-weight: 500;
+}
+.title-slash {
+  color: #088178;
+}
+.single-product-price {
+  color: var(--clr-grey-3);
+  font-size: 3rem;
+  font-weight: 500;
+  padding-bottom: 0.8rem;
+}
+.detail .right h6 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+.single-product-title {
+  font-weighta: 500;
+  font-size: 3.3rem;
+  padding-bottom: 0.6rem;
+}
+
+.detail .right input {
+  width: 5rem;
+  height: 4.5rem;
+  padding-left: 1.7rem;
+  font-size: 1.8rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+}
+.detail .right input:focus {
+  outline: none;
+}
+
+.btn_cart {
+  border: none;
+  padding: 0.8em 1.5em;
+  text-transform: uppercase;
+  border-radius: 0.7rem;
+  overflow: hidden;
+  transition: all 0.2s linear;
+  cursor: pointer;
+  overflow: none;
+  background-color: #088178;
+  color: #fff;
+  outline: none;
+  border: none;
+}
+.btn_cart:hover {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid black;
+  outline: none;
+}
+.btn_wishlist {
+  display: grid;
+  padding: 0.8em 1.5em;
+  place-items: center;
+  border-radius: 0.7rem;
+  border: 1px solid black;
+}
+
+.detail .right p {
+  max-width: 25em;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  line-height: 1.8;
+}
+
+.left-padding {
+  padding-left: 1rem;
+}
+.padding {
+  margin-top: 5rem;
+}
+.flex-al-centerr {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+@media (max-width: 1000px) {
+  .detail {
+    display: grid;
+    margin-top: 2.2rem;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .detail {
+    grid-template-columns: 1fr;
+  }
+
+  .padding {
+    margin-top: -1rem;
+  }
+  .left img {
+    width: 100%;
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 665px) {
+  .section-center h3 {
+    font-size: 2.4rem;
+  }
+  .single-product-company {
+    font-size: 1.2rem;
+  }
+}

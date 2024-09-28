@@ -8,6 +8,7 @@ import { AboutPage } from "./page/about";
 import { ShopPage } from "./page/product";
 import { Toaster } from "react-hot-toast";
 import SignUp from "./components/SignUpPage";
+import { SingleProduct } from "./page/singleProduct";
 function App() {
     return (
         <>
@@ -19,6 +20,7 @@ function App() {
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/shop" element={<ShopPage />} />
+                <Route path="/shop/:id" element={<SingleProduct />} />
             </Routes>
             <Footer/>
         </>

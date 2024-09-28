@@ -120,6 +120,23 @@ app.get('/api/products', async (req, res) => {
   }
 });
 
+// Get Single Products
+// Get Single Product by ID
+app.get('/api/single-product/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const product = await Product.findById(id);
+    if (!product) {
+      return res.status(404).json({ msg: 'Product not found' });
+    }
+    res.json(product);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
+
+
 // app.get('/api/products/search', async (req, res) => {
 //   const { name, minPrice, maxPrice, type } = req.query;
 //   let query = {};

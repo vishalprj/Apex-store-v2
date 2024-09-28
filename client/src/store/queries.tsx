@@ -30,3 +30,14 @@ export const getProduct = async () => {
     throw error;
   }
 };
+
+
+export const getSingleProduct = async (id:string|undefined) => {
+  try {
+    const res = await axios.get(`https://amazon-clone-v1.onrender.com/api/single-product/${id}`);
+    return res.data;
+  } catch (error) {
+    console.error("Error during login:", error);
+    throw error;
+  }
+};

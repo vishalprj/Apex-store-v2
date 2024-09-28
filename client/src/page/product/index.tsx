@@ -4,8 +4,8 @@ import { getProduct } from '../../store/queries';
 import { ProductCard } from '../../components/card';
 
 export const ShopPage = () => {
-  const [product, setProduct] = useState([]); // Initialize product as an empty array
-  console.log("🚀 ~ ShopPage ~ product:", product)
+  const [product, setProduct] = useState([]);
+  const [filters, setFilters] = useState({ search: '', type: '', priceRange: '' });
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -15,6 +15,14 @@ export const ShopPage = () => {
     fetchProduct();
   }, []);
 
+  // Filtered products based on user input
+  const filteredProducts = product.filter((item) => {
+    const matchesSearch = item.name.toLowerCase().includes(filters.search.toLowerCase());
+    const matchesType = filters.type ? item.type === filters.type : true;
+    const matchesPrice = filters.priceRange ? item.price <= filters.priceRange : true;
+    return matchesSearch && matchesType && matchesPrice;
+  });
+
   return (
     <>
       <section className="hero1">
@@ -23,23 +31,50 @@ export const ShopPage = () => {
       </section>
       <div className="productHeading">
         <h2>Products</h2>
-        <p>Summer Collection New Morden Design</p>
+        <p>Summer Collection New Modern Design</p>
       </div>
+
+      {/* Filters */}
+      <div className="filter-container">
+        <input
+          type="text"
+          placeholder="Search by name"
+          value={filters.search}
+          onChange={(e) => setFilters({ ...filters, search: e.target.value })}
+        />
+        <select
+          value={filters.type}
+          onChange={(e) => setFilters({ ...filters, type: e.target.value })}
+        >
+          <option value="">All Types</option>
+          <option value="Shirt">Shirt</option>
+          <option value="Pants">Pants</option>
+          <option value="Shoes">Shoes</option>
+        </select>
+        <select
+          value={filters.priceRange}
+          onChange={(e) => setFilters({ ...filters, priceRange: e.target.value })}
+        >
+          <option value="">All Prices</option>
+          <option value="50">Below $50</option>
+          <option value="100">Below $100</option>
+          <option value="200">Below $200</option>
+        </select>
+      </div>
+
       <section className="product pad product1">
         <div className="sidebar-container">
-          <div className="">
-            {/* <FiltersDesktop productState={productCurrentState} /> */}
-          </div>
         </div>
         <div className="pro">
-          {product.map((product, index) => (
-            <ProductCard key={index} product={product} />
-          ))}
+          {filteredProducts.length > 0 ? (
+            filteredProducts.map((product, index) => (
+              <ProductCard key={index} product={product} />
+            ))
+          ) : (
+            <p>No products found matching your criteria.</p>
+          )}
         </div>
       </section>
-      <div className="FilterPhone">
-        {/* <FilterPhone /> */}
-      </div>
     </>
   );
 };

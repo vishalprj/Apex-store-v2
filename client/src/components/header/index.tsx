@@ -6,15 +6,11 @@ import {
 } from 'react-icons/ai';
 import { BsCartDash, BsPerson } from 'react-icons/bs';
 import { Squash as Hamburger } from 'hamburger-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import "./header.css"
 export const Navbar = () => {
-//   const { login, setUser, setLogin, user } = useAuthContext();
-//   const { cart, setCart, toggleCartModal, setToggleCartModal } =
-//     useCartContext();
-//   const [wishlist, setWishlist] = useWishlistContext();
+
   const [showSidebar, setShowSidebar] = useState(false);
-//   const navigate = useNavigate();
   const [isOpen, setOpen] = useState(false);
 
   return (
@@ -49,22 +45,6 @@ export const Navbar = () => {
               <Link to="/about">About</Link>
             </li>
           </ul>
-          <Link to="/wishlist" className="flex">
-            <AiOutlineHeart className="icon-link" />
-            {/* {wishlist?.length ? (
-              <span className="nav-link-span wishlist-span">
-                {wishlist?.length}
-              </span>
-            ) : null} */}
-          </Link>
-          <button
-            aria-label="cart-icon"
-            type="submit"
-            className="flex btn_1"
-
-          >
-
-          </button>
 
             <button
               aria-label="logout-icon"
