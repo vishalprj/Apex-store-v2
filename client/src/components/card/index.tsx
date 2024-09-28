@@ -1,10 +1,12 @@
-import React from 'react';
-import { AiFillStar, AiOutlineHeart } from 'react-icons/ai';
-import { BsFillHeartFill, BsCartFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import "./card.css"
+import { Product } from '../../type';
 
-export const ProductCard = ({ product }) => {
+type ProductCardProps = {
+  product: Product;
+}
+
+export const ProductCard = ({ product }: ProductCardProps) => {
   return (
     <div className="product pro1">
       <Link to={`/shop/${product._id}`}>

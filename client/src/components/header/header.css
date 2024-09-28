@@ -104,7 +104,6 @@
   font-weight: 600;
   padding: 0.5rem 1rem;
 }
-/* Media Queries  */
 @media (max-width: 665px) {
   .logo {
     font-size: 2.8rem;
@@ -129,12 +128,10 @@
   .hide-for-desktop {
     display: block;
   }
-  .cart-span {
-    right: 11.6rem;
-    top: 2.7rem;
-  }
-  .wishlist-span {
-    right: 15.6rem;
-    top: 2.7rem;
-  }
+}
+
+.active-link {
+  color: #088178;
+  font-weight: bold;
+  border-bottom: 2px solid #088178;
 }

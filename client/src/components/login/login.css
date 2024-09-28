@@ -1,5 +1,6 @@
 .auth-section {
   min-height: 100vh;
+  background-color: #fff !important;
 }
 .form {
   outline: 2px solid var(--clr-grey-12);

@@ -1,61 +1,62 @@
-import  { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useState } from 'react';
 import './dashboard.css';
 import { useNavigate } from 'react-router-dom';
-import { createProduct, getProduct } from '../../store/queries';
+import { createProduct, deleteProduct, useGetProduct } from '../../store/queries';
 import toast from 'react-hot-toast';
+import { ClipLoader } from 'react-spinners';
+import { Product } from '../../type';
 
 
-type AdminDashboardProps = {
-    user: string;
+type FormDataType = {
+  name: string;
+  description: string;
+  price: string;
+  imageUrl: string;
+  type: string;
 }
 
-const AdminDashboard = ({ user }:AdminDashboardProps) => {
-  const [products, setProducts] = useState([]);
-  const [formData, setFormData] = useState({
-    title: '',
+type AdminDashboardProps = {
+  user: string | null;
+};
+
+const AdminDashboard = ({ user }: AdminDashboardProps) => {
+  const [formData, setFormData] = useState<FormDataType>({
+    name: '',
     description: '',
     price: '',
     imageUrl: '',
-    type:''
+    type: '',
   });
+
   const navigate = useNavigate();
+  const { data: products = [], isLoading, refetch } = useGetProduct();
 
-  console.log("🚀 ~ AdminDashboard ~ formData:", formData)
-
- useEffect(() => {
   if (user && user !== 'admin') {
     navigate('/');
   }
-}, [user, navigate]);
 
-
-  useEffect(() => {
-    const fetchData = async () => {
-    const res = await getProduct()
-    setProducts(res)
-    }
-    fetchData()
-  }, []);
-
-   const addProduct = async (e) => {
-    e.preventDefault(); // Prevent default form submission
+  // Add new product
+  const addProduct = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     try {
-      await createProduct(formData); // Call the
-      toast.success("New Product added successfully");
-      setFormData({ title: '', description: '', price: '', imageUrl: '', type: '' });
-    } catch  {
-      toast.error("Failed to add new product");
+      const newProduct = { ...formData, price: Number(formData.price) };
+      await createProduct(newProduct);
+      toast.success('New Product added successfully');
+      setFormData({ name: '', description: '', price: '', imageUrl: '', type: '' });
+      refetch();
+    } catch {
+      toast.error('Failed to add new product');
     }
   };
 
-
   // Delete a product
-  const deleteProduct = async (id) => {
+  const handleDelete = async (id: string) => {
     try {
-      await axios.delete(`https://amazon-clone-v1.onrender.com/api/products/${id}`);
-      setProducts(products.filter((product) => product._id !== id));
+      await deleteProduct(id);
+      toast.success('Product deleted successfully');
+      refetch();
     } catch (error) {
+      toast.error('Failed to delete product');
       console.error('Error deleting product:', error);
     }
   };
@@ -64,15 +65,14 @@ const AdminDashboard = ({ user }:AdminDashboardProps) => {
     <div className="admin-dashboard">
       <h1>Admin Dashboard</h1>
 
-      {/* Add Product Form */}
       <div className="product-form">
         <h2>Add New Product</h2>
         <form onSubmit={addProduct}>
           <input
             type="text"
-            placeholder="Title"
-            value={formData.title}
-            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+            placeholder="Name"
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             required
           />
           <textarea
@@ -106,33 +106,38 @@ const AdminDashboard = ({ user }:AdminDashboardProps) => {
         </form>
       </div>
 
-      {/* Product List Table */}
       <div className="product-table">
         <h2>Product List</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Description</th>
-              <th>Price</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {products.map((product) => (
-              <tr key={product._id}>
-                <td>{product.title}</td>
-                <td>{product.description}</td>
-                <td>₹{product.price}</td>
-                <td>
-                  <button className="delete-btn" onClick={() => deleteProduct(product._id)}>
-                    Delete
-                  </button>
-                </td>
+        {isLoading ? (
+          <div className="loading-container">
+            <ClipLoader color="#000" loading={isLoading} size={80} />
+          </div>
+        ) : (
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {products.map((product: Product) => (
+                <tr key={product._id}>
+                  <td>{product.name}</td>
+                  <td>{product.description}</td>
+                  <td>₹{product.price}</td>
+                  <td>
+                    <button className="delete-btn" onClick={() => handleDelete(product._id)}>
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   );

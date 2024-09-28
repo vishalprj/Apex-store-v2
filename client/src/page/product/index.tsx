@@ -1,27 +1,22 @@
-import { useEffect, useState } from 'react';
+import {  useState } from 'react';
 import './productPage.css';
-import { getProduct } from '../../store/queries';
+import { useGetProduct } from '../../store/queries';
 import { ProductCard } from '../../components/card';
+import ClipLoader from 'react-spinners/ClipLoader';
+import { Product } from '../../type';
 
 export const ShopPage = () => {
-  const [product, setProduct] = useState([]);
   const [filters, setFilters] = useState({ search: '', type: '', priceRange: '' });
+  const { data: products, isLoading } = useGetProduct();
 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      const res = await getProduct();
-      setProduct(res);
-    };
-    fetchProduct();
-  }, []);
-
-  // Filtered products based on user input
-  const filteredProducts = product.filter((item) => {
-    const matchesSearch = item.name.toLowerCase().includes(filters.search.toLowerCase());
-    const matchesType = filters.type ? item.type === filters.type : true;
-    const matchesPrice = filters.priceRange ? item.price <= filters.priceRange : true;
-    return matchesSearch && matchesType && matchesPrice;
-  });
+  const filteredProducts = products
+    ? products.filter((item: { name: string; type: string; price: number; }) => {
+        const matchesSearch = item.name.toLowerCase().includes(filters.search.toLowerCase());
+        const matchesType = filters.type ? item.type === filters.type : true;
+        const matchesPrice = filters.priceRange ? item.price <= Number(filters.priceRange) : true;
+        return matchesSearch && matchesType && matchesPrice;
+      })
+    : [];
 
   return (
     <>
@@ -29,12 +24,12 @@ export const ShopPage = () => {
         <h2>#stayhome</h2>
         <p>Save more with coupons & up to 70% off!</p>
       </section>
+
       <div className="productHeading">
         <h2>Products</h2>
         <p>Summer Collection New Modern Design</p>
       </div>
 
-      {/* Filters */}
       <div className="filter-container">
         <input
           type="text"
@@ -63,15 +58,21 @@ export const ShopPage = () => {
       </div>
 
       <section className="product pad product1">
-        <div className="sidebar-container">
-        </div>
+        <div className="sidebar-container"></div>
+
+        {isLoading && (
+          <div className="spinner-container">
+            <ClipLoader color="#000" loading={isLoading} size={80} />
+          </div>
+        )}
+
         <div className="pro">
           {filteredProducts.length > 0 ? (
-            filteredProducts.map((product, index) => (
+            filteredProducts.map((product: Product, index: number) => (
               <ProductCard key={index} product={product} />
             ))
           ) : (
-            <p>No products found matching your criteria.</p>
+            !isLoading && <p>No products found matching your criteria.</p>
           )}
         </div>
       </section>

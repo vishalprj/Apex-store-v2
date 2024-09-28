@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Navbar } from "./components/header";
 import HomePage from "./page/home";
-import { Footer } from "./components/footer";
 import LoginPage from "./components/login";
 import { AboutPage } from "./page/about";
 import { ShopPage } from "./page/product";
@@ -12,6 +10,8 @@ import { SingleProduct } from "./page/singleProduct";
 import AdminDashboard from "./page/dashboard";
 import PrivateRoute from "./privateRoute";
 import "./index.css";
+import Footer from './components/footer';
+import Navbar from './components/header';
 
 function App() {
   const [user, setUser] = useState<string | null>(null);

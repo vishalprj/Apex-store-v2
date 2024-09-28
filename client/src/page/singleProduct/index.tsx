@@ -2,10 +2,12 @@ import './SingleProduct.css';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getSingleProduct } from '../../store/queries';
+import ClipLoader from 'react-spinners/ClipLoader';
+import { Product } from '../../type';
 
 export const SingleProduct = () => {
   const { id } = useParams();
-  const [singleProduct, setSingleProduct] = useState(null);
+  const [singleProduct, setSingleProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -14,8 +16,8 @@ export const SingleProduct = () => {
         setLoading(true);
         const product = await getSingleProduct(id);
         setSingleProduct(product);
-      } catch  {
-        console.error('Error fetching product');
+      } catch (error) {
+        console.error('Error fetching product', error);
       } finally {
         setLoading(false);
       }
@@ -24,13 +26,18 @@ export const SingleProduct = () => {
     fetchProduct();
   }, [id]);
 
-//   if (loading) return <h2>Loading...</h2>;
+  if (loading) {
+    return (
+      <div className="loader-container">
+        <ClipLoader color="#000" loading={loading} size={80} />
+      </div>
+    );
+  }
 
   if (!singleProduct) return null;
 
   return (
     <>
-      {/* Page Hero Section */}
       <section className="page-hero">
         <div className="section-center">
           <h3 className="page-hero-title">
