@@ -3,11 +3,11 @@ import { AiFillStar, AiOutlineHeart } from 'react-icons/ai';
 import { BsFillHeartFill, BsCartFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 
-export const ProductCard = ({ product, children }) => {
+export const ProductCard = ({ product }) => {
   return (
     <div className="product pro1">
       <Link to={`/products/${product._id}`}>
-        <img className="product_img" src={product.imgUrl} alt={product.productTitle} />
+        <img className="product_img" src={product?.imageUrl} alt={product.productTitle} />
       </Link>
 
       {/* Icons and buttons */}

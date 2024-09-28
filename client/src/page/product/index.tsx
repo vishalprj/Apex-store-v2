@@ -1,6 +1,19 @@
-import './productPage.css'
+import { useEffect, useState } from 'react';
+import './productPage.css';
+import { getProduct } from '../../store/queries';
+import { ProductCard } from '../../components/card';
 
 export const ShopPage = () => {
+  const [product, setProduct] = useState([]); // Initialize product as an empty array
+  console.log("🚀 ~ ShopPage ~ product:", product)
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const res = await getProduct();
+      setProduct(res);
+    };
+    fetchProduct();
+  }, []);
 
   return (
     <>
@@ -19,9 +32,9 @@ export const ShopPage = () => {
           </div>
         </div>
         <div className="pro">
-          {/* {results.map((product) => (
-            <ProductCard product={product} />
-          ))} */}
+          {product.map((product, index) => (
+            <ProductCard key={index} product={product} />
+          ))}
         </div>
       </section>
       <div className="FilterPhone">
